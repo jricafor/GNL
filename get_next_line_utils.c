@@ -12,10 +12,10 @@
 
 #include "get_next_line.h"
 
-char	*set_line(char *buf, int start, int i)
+char *set_line(char *buf, int start, int i)
 {
-	char	*str;
-	int		y;
+	char *str;
+	int y;
 
 	str = malloc(sizeof(char) * (i - start) + 1);
 	y = 0;
@@ -25,11 +25,13 @@ char	*set_line(char *buf, int start, int i)
 	return (str);
 }
 
-int		find_new_line(char *buf, char **line, int i)
+int	find_new_line(char *buf, char **line, int i)
 {
-	int	start;
+	int start;
 
 	start = i;
+	if (buf[i] == '\0')
+	 	return (0);
 	while (buf[i] != '\n' && buf[i] != '\0')
 		i++;
 	*line = NULL;
