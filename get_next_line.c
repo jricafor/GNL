@@ -14,5 +14,16 @@
 
 int		get_next_line(int fd, char **line)
 {
+	static int i = 0;
 
+	if (i == 0)
+	{
+		// find next line
+	}
+	else
+	{
+		// find str
+		// then next line
+	}
+	// return 0, 1 or -1
 }
