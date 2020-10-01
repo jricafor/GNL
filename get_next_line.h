@@ -6,12 +6,12 @@
 /*   By: jricafor <jricafor@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/07/20 12:40:21 by jricafor          #+#    #+#             */
-/*   Updated: 2020/07/20 12:44:33 by jricafor         ###   ########.fr       */
+/*   Updated: 2020/10/01 11:43:23 by jricafor         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef	GET_NEXT_LINE_H
-#define	GET_NEXT_LINE_H
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
 #  define BUFFER_SIZE 42
