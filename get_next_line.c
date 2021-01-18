@@ -14,17 +14,28 @@
 
 int get_next_line(int fd, char **line)
 {
-	int		ret;
-	char	buf[BUFFER_SIZE + 1];
-	static	int	i = 0;
+	int				bytes_read;
+	char			buf[BUFFER_SIZE + 1];
+	static char		*sample = NULL;
+	static char		*tmp = NULL;
 
-	if (!line || fd < 0 || BUFFER_SIZE < 1 || read(fd, buf, 0) < 0)
-		return (-1);
-	
-	ret = read(fd, buf, BUFFER_SIZE);
-	buf[ret] = '\0';
-	i = find_new_line(buf, line, i);
-	if (buf[i] == '\0')
-	 	return (0);
-	return (1);
+	sample = tmp;
+	printf("sample: %s\n", sample);
+	while (n_isfound(sample) <= 0 && (bytes_read = read(fd, buf, BUFFER_SIZE)) > 0)
+	{
+		buf[bytes_read] = '\0';
+		if (sample != NULL)
+			tmp = flegma(sample, 0);	
+		if (!(sample = malloc(sizeof(char) * (ft_strlen(sample) + BUFFER_SIZE + 1))))
+			return (-1);
+		sample = append_sample(tmp, buf);
+		if (sample == NULL)
+			return (-1);
+	}
+	if (n_isfound(sample) && sample)
+		tmp = flegma(sample, n_isfound(sample) + 1);
+	else
+		tmp = NULL;
+	printf("tmp: %s\n", tmp);
+	return (set_line(sample, buf, line));
 }

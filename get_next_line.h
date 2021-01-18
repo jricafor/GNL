@@ -19,9 +19,20 @@
 
 # include <stdlib.h>
 # include <unistd.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <string.h>
+# include <sys/types.h>
+# include <sys/stat.h>
+# include <fcntl.h>
 
 int		get_next_line(int fd, char **line);
-int		find_new_line(char *buf, char **line, int i);
-char	*set_line(char *buf, int start, int i);
+
+int		ft_strlen(char *str);
+int		n_isfound(char *sample);
+char	*flegma(char *src, int offset);
+char	*append_sample(char *sample, char buf[BUFFER_SIZE + 1]);
+int		set_line(char *sample, char buf[BUFFER_SIZE + 1],char **line);
+
 
 #endif
