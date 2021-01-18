@@ -18,7 +18,6 @@ int main(void)
 	i = 0;
 	while (i++ < 11)
 	{
-		printf("***********************************************\n");
 		printf("return: %d\n", get_next_line(fd, &line));
 		printf("line %d: %s\n\n**************************\n\n", i, line);
 	}
