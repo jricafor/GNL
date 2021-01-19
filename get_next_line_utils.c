@@ -24,42 +24,34 @@ int		ft_strlen(char *str)
 	return (i);
 }
 
-/** cherche le next \n et return une size **/
-int		n_isfound(char *sample)
+int		looping(char *sample)
 {
-	int size;
 	int z;
 
-	if(!sample || sample == NULL || !sample[0])
-		return (-1);
-	size = 0;
+	if(!sample || sample == NULL)
+		return (1);
 	z = 0;
-	if (sample[z] == '\n' && sample[z + 1])
-		z++;
 	while (sample[z] != '\n' && sample[z])
-	{
 		z++;
-		size++;
-		if(sample[z] == '\0')
-			return (0);
-	}
-	return (size);
+	if (sample[z] == '\n')
+		return (0);
+	return (1);
 }
 
-char	*flegma(char *src, int offset)
+char	*flegma(char *src, int start, int end)
 {
 	char *dest;
 	int i;
 
 	i = 0;
-	dest = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	dest = malloc(sizeof(char) * (end - start + 1));
 	if (!dest)
 		return (NULL);
-	while (src[offset] != '\0')
+	while (start < end && src[start])
 	{
-		dest[i] = src[offset];
+		dest[i] = src[start];
 		i++;
-		offset++;
+		start++;
 	}
 	dest[i] = '\0';
 	return (dest);
@@ -71,20 +63,20 @@ char	*append_sample(char *sample, char buf[BUFFER_SIZE + 1])
 	int		i;
 	int		y;
 	
-	if (!sample)
-		return (buf);
-	res = malloc(sizeof(char) * (ft_strlen(sample) + BUFFER_SIZE + 1));
-	if (!res)
+	if (!(res = malloc(sizeof(char) * (ft_strlen(sample) + BUFFER_SIZE + 1))))
 		return (NULL);
 	i = 0;
 	y = 0;
-	while (sample[i])
+	if (sample)
 	{
-		res[y] = sample[i];
-		i++;
-		y++;
+		while (sample[i])
+		{
+			res[y] = sample[i];
+			i++;
+			y++;
+		}
+		i = 0;
 	}
-	i = 0;
 	while (buf[i])
 	{
 		res[y] = buf[i];
@@ -95,25 +87,29 @@ char	*append_sample(char *sample, char buf[BUFFER_SIZE + 1])
 	return (res);
 }
 
-int		set_line(char *sample, char buf[BUFFER_SIZE + 1],char **line)
+int		set_line(char *sample, char **line, char **tmp)
 {
-	int		i;
-	char	*res;
+	int		size;
 
+	*line = flegma("", 0, 1);
 	if (sample == NULL)
+		return (0);
+	size = 0;
+	if (sample[size] == '\n')
 	{
-		*line = NULL;
+		*tmp = flegma(sample, size + 1, ft_strlen(sample));
+		return (1);
+	}
+	while (sample[size] != '\n' && sample[size] != '\0')
+	size++;
+	*line = flegma(sample, 0, size);
+	if (sample[size] == '\n')
+		size++;
+	if (sample[size] == '\0')
+	{
+		*tmp = NULL;
 		return (0);
 	}
-	if (!(res = malloc(sizeof(char) * (n_isfound(sample) + 1))))
-		return (-1);
-	i = 0;
-	while (sample[i] != '\n' && sample[i])
-	{
-		res[i] = sample[i];
-		i++;
-	}
-	res[i] = '\0';
-	*line = res;
+	*tmp = flegma(sample, size, ft_strlen(sample));
 	return (1);
 }

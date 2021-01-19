@@ -16,26 +16,26 @@ int get_next_line(int fd, char **line)
 {
 	int				bytes_read;
 	char			buf[BUFFER_SIZE + 1];
-	static char		*sample = NULL;
+	char			*sample;
 	static char		*tmp = NULL;
 
+	*line = NULL;
 	sample = tmp;
-	printf("sample: %s\n", sample);
-	while (n_isfound(sample) <= 0 && (bytes_read = read(fd, buf, BUFFER_SIZE)) > 0)
+	if (!fd || fd < 1 || !line || BUFFER_SIZE < 1 || read(fd, buf, 0) < 0)
+		return (-1);
+	while (looping(sample) && (bytes_read = read(fd, buf, BUFFER_SIZE)) > 0)
 	{
 		buf[bytes_read] = '\0';
 		if (sample != NULL)
-			tmp = flegma(sample, 0);	
+			tmp = flegma(sample, 0, ft_strlen(sample) + ft_strlen(buf));	
 		if (!(sample = malloc(sizeof(char) * (ft_strlen(sample) + BUFFER_SIZE + 1))))
 			return (-1);
 		sample = append_sample(tmp, buf);
 		if (sample == NULL)
 			return (-1);
 	}
-	if (n_isfound(sample) && sample)
-		tmp = flegma(sample, n_isfound(sample) + 1);
-	else
-		tmp = NULL;
-	printf("tmp: %s\n", tmp);
-	return (set_line(sample, buf, line));
+	set_line(sample, line, &tmp);
+	if (bytes_read != 0)
+		return (1);
+	return (0);
 }

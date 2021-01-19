@@ -1,7 +1,7 @@
+//# include <sys/types.h>
+//# include <sys/stat.h>
+# include <fcntl.h>
 #include "get_next_line.h"
-#include <stdio.h>
-#include <fcntl.h> // for open
-#include <unistd.h>
 
 int main(void)
 {
@@ -11,12 +11,12 @@ int main(void)
 	
 	line = NULL;
 
-	fd = open("text.txt", O_RDONLY);
+	fd = open("read.txt", O_RDONLY);
 	if (fd < 0)
 		return (-1);
 
 	i = 0;
-	while (i++ < 11)
+	while (i++ < 12)
 	{
 		printf("return: %d\n", get_next_line(fd, &line));
 		printf("line %d: %s\n\n**************************\n\n", i, line);
