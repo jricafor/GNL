@@ -51,6 +51,7 @@ char	*join_line(char *tmp, char *sample, char *buff)
 char	*append_line(char *sample, char *buff, int size)
 {
 	char *tmp;
+
 	tmp = malloc(sizeof(char) * (ft_strlen(buff) + size + 1));
 	tmp = join_line(tmp, sample, buff);
 	return (tmp);
@@ -84,8 +85,8 @@ int		read_buff(int fd, char *buff, char **line)
 
 int		set_line(char **line, int fd, char *buff, int i)
 {
-	int	y;
-	char *tmp;
+	int		y;
+	char	*tmp;
 
 	y = 0;
 	tmp = malloc(sizeof(char) * (ft_strlen(buff) - i + 1));
