@@ -25,5 +25,6 @@ int		ft_strlen(const char *str);
 char	*join_line(char *tmp, char *sample, char *buff);
 char	*append_line(char *sample, char *buff, int size);
 int		read_buff(int fd, char *buff, char **line);
+int		set_line(char **line, int fd, char *buff, int i);
 
 #endif
