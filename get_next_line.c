@@ -12,30 +12,23 @@
 
 #include "get_next_line.h"
 
-int get_next_line(int fd, char **line)
+int		get_next_line(int fd, char **line)
 {
-	int				bytes_read;
-	char			buf[BUFFER_SIZE + 1];
-	static char		*sample = NULL;
-	static char		*tmp = NULL;
+	static char			buff[BUFFER_SIZE];
+	int					i;
+	int					ret;
 
-	sample = tmp;
-	printf("sample: %s\n", sample);
-	while (n_isfound(sample) <= 0 && (bytes_read = read(fd, buf, BUFFER_SIZE)) > 0)
-	{
-		buf[bytes_read] = '\0';
-		if (sample != NULL)
-			tmp = flegma(sample, 0);	
-		if (!(sample = malloc(sizeof(char) * (ft_strlen(sample) + BUFFER_SIZE + 1))))
-			return (-1);
-		sample = append_sample(tmp, buf);
-		if (sample == NULL)
-			return (-1);
-	}
-	if (n_isfound(sample) && sample)
-		tmp = flegma(sample, n_isfound(sample) + 1);
+	if (!fd || fd < 1 || !line || BUFFER_SIZE < 1)
+		return (-1);
+
+	*line = malloc(sizeof(char) * 1);
+	*line[0] = '\0';
+	i = 0;
+	while (buff[i] && buff[i] != '\n')
+		i++;
+	if (buff[i] == '\n')
+		ret = set_line(line, fd, buff, i);
 	else
-		tmp = NULL;
-	printf("tmp: %s\n", tmp);
-	return (set_line(sample, buf, line));
+		ret = read_buff(fd, buff, line);
+	return (ret);
 }

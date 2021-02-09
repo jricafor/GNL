@@ -14,25 +14,18 @@
 # define GET_NEXT_LINE_H
 
 # ifndef BUFFER_SIZE
-#  define BUFFER_SIZE 4096
+#  define BUFFER_SIZE 42
 # endif
 
 # include <stdlib.h>
 # include <unistd.h>
-# include <stdlib.h>
 # include <stdio.h>
-# include <string.h>
-# include <sys/types.h>
-# include <sys/stat.h>
-# include <fcntl.h>
 
+int		ft_strlen(const char *str);
+char	*join_line(char *tmp, char *sample, char *buff);
+char	*append_line(char *sample, char *buff, int size);
+int		read_buff(int fd, char *buff, char **line);
+int		set_line(char **line, int fd, char *buff, int i);
 int		get_next_line(int fd, char **line);
-
-int		ft_strlen(char *str);
-int		n_isfound(char *sample);
-char	*flegma(char *src, int offset);
-char	*append_sample(char *sample, char buf[BUFFER_SIZE + 1]);
-int		set_line(char *sample, char buf[BUFFER_SIZE + 1],char **line);
-
 
 #endif
