@@ -14,6 +14,7 @@
 
 int		get_next_line(int fd, char **line)
 {
+<<<<<<< HEAD
 	static char			buff[BUFFER_SIZE];
 	int					i;
 	int					ret;
@@ -31,4 +32,30 @@ int		get_next_line(int fd, char **line)
 	else
 		ret = read_buff(fd, buff, line);
 	return (ret);
+=======
+	int				bytes_read;
+	char			buf[BUFFER_SIZE + 1];
+	char			*sample;
+	static char		*tmp = NULL;
+
+	*line = NULL;
+	sample = tmp;
+	if (!fd || fd < 1 || !line || BUFFER_SIZE < 1 || read(fd, buf, 0) < 0)
+		return (-1);
+	while (looping(sample) && (bytes_read = read(fd, buf, BUFFER_SIZE)) > 0)
+	{
+		buf[bytes_read] = '\0';
+		if (sample != NULL)
+			tmp = flegma(sample, 0, ft_strlen(sample) + ft_strlen(buf));	
+		if (!(sample = malloc(sizeof(char) * (ft_strlen(sample) + BUFFER_SIZE + 1))))
+			return (-1);
+		sample = append_sample(tmp, buf);
+		if (sample == NULL)
+			return (-1);
+	}
+	set_line(sample, line, &tmp);
+	if (bytes_read != 0)
+		return (1);
+	return (0);
+>>>>>>> 38c63828596e73ce071a79bd94a617ee13e09075
 }
